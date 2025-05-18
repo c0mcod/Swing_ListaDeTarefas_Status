@@ -54,10 +54,11 @@ public class ListaDAO {
 
 			while (rset.next()) {
 				ListadeAtividade list = new ListadeAtividade();
-				list.setTitulo(rset.getString("id"));
+				list.setId(rset.getInt("id"));
+				list.setTitulo(rset.getString("titulo"));
 				list.setDescricao(rset.getString("descricao"));
-				list.setStatus(rset.getString("status_atividade"));
 				list.setData_criacao(rset.getDate("data_criacao"));
+				list.setStatus(rset.getString("status_atividade"));
 				lista.add(list);
 			}
 			return lista;
