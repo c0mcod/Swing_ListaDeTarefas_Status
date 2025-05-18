@@ -5,7 +5,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Date;
 
 import javax.swing.ButtonGroup;
@@ -15,15 +14,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
-
 import br.com.lista.dao.ListaDAO;
 import br.com.lista.model.ListadeAtividade;
 import br.com.lista.table.*;
-@SuppressWarnings("serial")
 public class InterfacePrincipal extends TableMethod{
 	
 	@SuppressWarnings("static-access")
@@ -193,6 +187,46 @@ public class InterfacePrincipal extends TableMethod{
 			}
 		});
 		
+		btnD.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFrame FrameDelete = new JFrame();
+				FrameDelete.setSize(500,400);
+				FrameDelete.setTitle("Deletar atividade");
+				FrameDelete.setDefaultCloseOperation(FrameDelete.DISPOSE_ON_CLOSE);
+				
+				JLabel labelId = new JLabel("ID");
+				JTextField campoId = new JTextField(10);
+				JButton enviar = new JButton("Enviar");
+				
+				enviar.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						String idBd = campoId.getText();
+						int intIdBd = Integer.parseInt(idBd);
+						
+						try {
+							dao.deletarAtividade(intIdBd);
+							tm.atualizarTable();
+							JOptionPane.showMessageDialog(enviar, "Atividade removida!");
+							FrameDelete.dispose();
+							
+						}catch (Exception e1) {
+							e1.printStackTrace();
+						}
+						
+					}
+				});
+				FrameDelete.add(labelId);
+				FrameDelete.add(campoId);
+				FrameDelete.add(enviar);
+				FrameDelete.setLayout(new GridLayout(10,5));
+				FrameDelete.setVisible(true);
+			}
+		});
+
 		JPanel painelInferior = new JPanel();
 
 		painelInferior.add(btnC);
